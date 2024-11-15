@@ -17,6 +17,10 @@ public class PlayerMove : MonoBehaviour
 
     private bool _rotCoroutine;
 
+    private GameObject _floor;
+
+    private InteractiveObject _objectToInteract;
+
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -25,6 +29,11 @@ public class PlayerMove : MonoBehaviour
     private void Update()
     {
         Movement();
+
+        if (Input.GetKeyDown(KeyCode.E) && _objectToInteract != null)
+        {
+            Interact();
+        }
     }
 
     private void Movement()
@@ -66,12 +75,16 @@ public class PlayerMove : MonoBehaviour
         if (Vector3.Angle(collision.contacts[0].normal, Vector3.up) < 40f)
         {
             _grounded = true;
+            _floor = collision.gameObject;
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        _grounded = false;
+        if (collision.gameObject == _floor)
+        {
+            _grounded = false;
+        }
     }
 
     private IEnumerator PlayerModelRotate()
@@ -102,5 +115,26 @@ public class PlayerMove : MonoBehaviour
 
         _playerModel.localEulerAngles = endRotation;
         _rotCoroutine = false;
+    }
+
+    private void Interact()
+    {
+        _objectToInteract.Interact();
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.GetComponent<InteractiveObject>())
+        {
+            _objectToInteract = collider.GetComponent<InteractiveObject>();
+        }
+    }
+    
+    private void OnTriggerExit(Collider collider)
+    {
+        if (collider.GetComponent<InteractiveObject>())
+        {
+            _objectToInteract = null;
+        }
     }
 }
