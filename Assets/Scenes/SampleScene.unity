@@ -364,10 +364,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 10
+  _jumpSpeed: 10
   _playerModel: {fileID: 1717314346}
   _mouseSencetivity: 10
   _cameraTransform: {fileID: 1957977503}
-  _jumpSpeed: 10
 --- !u!4 &430758687
 Transform:
   m_ObjectHideFlags: 0
@@ -425,7 +425,7 @@ GameObject:
   - component: {fileID: 548022073}
   - component: {fileID: 548022072}
   - component: {fileID: 548022071}
-  - component: {fileID: 548022070}
+  - component: {fileID: 548022076}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -433,18 +433,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &548022070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 548022069}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13d6538bd6febaa4bad2be2386ea35b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &548022071
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -552,6 +540,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &548022076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548022069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b76251c6294374943bc05dea139fb82c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _beeLevel: 2
+  _maxHoneyLevel: 16
 --- !u!1 &1208645694
 GameObject:
   m_ObjectHideFlags: 0
