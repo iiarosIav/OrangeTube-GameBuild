@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hive : InteractiveObject
+public class HiveScript : InteractiveObject
 {
     private float _honeyLevel; // кол-во меда в улье
     [SerializeField] private float _beeLevel; // уровень пчел в улье
