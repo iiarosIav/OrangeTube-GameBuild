@@ -47,7 +47,7 @@ public class Bee : MonoBehaviour
 
     void ConvertPollen()
     {
-        ParentHive._HoneyAmount += PollenAmount;
+        ParentHive.HoneyAmount += PollenAmount;
         PollenAmount = 0;
         FreezeMove();
         transform.position = ParentHive.transform.position;
