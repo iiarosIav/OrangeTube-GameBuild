@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 417167908334774260}
   - component: {fileID: 3727808455974579217}
   - component: {fileID: 7831923736298998849}
-  m_Layer: 2
+  m_Layer: 6
   m_Name: BeeModelDef
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 619108034266411246}
   - component: {fileID: 2801989547420468251}
   - component: {fileID: 5797576814974789011}
-  m_Layer: 2
+  m_Layer: 6
   m_Name: Bee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,5 +175,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _PollenAmount: 0
   MaxPollenAmount: 10
-  _agent: {fileID: 0}
   _model: {fileID: 4598172499421084614}
