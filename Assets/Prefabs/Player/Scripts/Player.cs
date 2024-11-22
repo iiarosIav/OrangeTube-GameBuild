@@ -26,6 +26,9 @@ public class Player : MonoBehaviour
     private InteractiveObject _objectToInteract;
 
     private float _honey;
+    private float _energyHoney;
+
+    private Flask _flask;
 
     private void Awake()
     {
@@ -52,6 +55,11 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && _objectToInteract != null)
         {
             Interact();
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            SetFlaskNull();
+            Debug.Log("Delete Flask");
         }
     }
 
@@ -94,10 +102,19 @@ public class Player : MonoBehaviour
         _objectToInteract.Interact();
     }
 
-    public void GetHoney(float honey)
+    public void TakeHoney(float honey)
     {
         _honey += honey;
     }
+    public void TakeEnergyHoney(float honey)
+    {
+        _energyHoney += honey;
+    }
+
+    public Flask GetFlask() => _flask;
+    public void SetFlusk(Flask.FlaskType type) => _flask = new Flask(type);
+    public void SetFlaskNull() => _flask = null;
+
 
     private void OnCollisionEnter(Collision collision)
     {

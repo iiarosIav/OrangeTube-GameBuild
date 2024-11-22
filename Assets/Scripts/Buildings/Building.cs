@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
-public class Building : MonoBehaviour
+public class Building : InteractiveObject
 {
     [SerializeField] private Renderer _model;
     private Material _material;

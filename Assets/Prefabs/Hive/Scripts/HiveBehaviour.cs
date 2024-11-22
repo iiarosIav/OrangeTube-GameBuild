@@ -69,10 +69,13 @@ public class HiveBehaviour : InteractiveObject
     
     public override void Interact() // взаимодействие с ульем
     {
-        if (HoneyCapacity == _maxCapacity) // если полон, то опустошаем
+        if (HoneyCapacity >= Flask.FlaskCapacity) // если полон, то опустошаем
         {
-            Player.Instance.GetHoney(HoneyCapacity);
-            HoneyCapacity = 0;
+            Player player = Player.Instance;
+            if (player.GetFlask() != null) return;
+            Player.Instance.TakeHoney(HoneyCapacity);
+            Player.Instance.SetFlusk(Flask.FlaskType.Honey);
+            HoneyCapacity -= Flask.FlaskCapacity;
             Debug.Log("Devastated");
         }
         else // если нет, то выводим количество меда

@@ -51,7 +51,7 @@ public class Bee : MonoBehaviour
         _speed = _agent.speed;
         SetNewDestination();
         _target_height = Random.Range(0, 3f);
-        Level = 1;
+        Level = 8;
     }
 
     private void Update()
