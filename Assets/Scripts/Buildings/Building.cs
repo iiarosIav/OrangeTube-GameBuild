@@ -7,7 +7,10 @@ using UnityEngine;
 public class Building : InteractiveObject
 {
     [SerializeField] private Renderer _model;
+    [SerializeField] private BuildingCollider _collider;
     private Material _material;
+
+    public (float x, float y) Size;
     
     public bool CanBuild;
 
@@ -21,6 +24,11 @@ public class Building : InteractiveObject
     {
         _material = _model.material;
         _material.color = _static.color;
+        Vector3 size = _collider.gameObject.GetComponent<Collider>().bounds.size;
+        Debug.Log(size);
+        float x = size.x;
+        float y = size.z;
+        Size = (x, y);
     }
 
     public void SetMaterial(int materialIndex)
@@ -43,6 +51,13 @@ public class Building : InteractiveObject
             _isStatic = true;
         }
     }
+
+    public void RotateCollider()
+    {
+        Size = (Size.y, Size.x);
+    }
+
+    public int GetObstacles() => _collider.Obstacles;
 
     // private void OnCollisionEnter(Collision other)
     // {

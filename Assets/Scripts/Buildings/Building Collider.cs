@@ -5,21 +5,21 @@ using UnityEngine;
 public class BuildingCollider : MonoBehaviour
 {
     [SerializeField] private Building _building;
-    private int _obstacles;
+    public int Obstacles;
     
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer != 3)
         {
             Debug.Log(other.gameObject.name);
-            _obstacles++;
+            Obstacles++;
             _building.SetMaterial(1);
         }
         
-        if (_obstacles <= 0)
+        if (Obstacles <= 0)
         {
             _building.SetMaterial(0);
-            _obstacles = 0;
+            Obstacles = 0;
         }
     }
     
@@ -27,13 +27,13 @@ public class BuildingCollider : MonoBehaviour
     {
         if (other.gameObject.layer != 3)
         {
-            _obstacles--;
+            Obstacles--;
         }
 
-        if (_obstacles <= 0)
+        if (Obstacles <= 0)
         {
             _building.SetMaterial(0);
-            _obstacles = 0;
+            Obstacles = 0;
         }
     }
 }
