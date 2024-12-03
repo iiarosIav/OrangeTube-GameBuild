@@ -6,7 +6,8 @@ public class Flask
     public enum FlaskType
     {
         Honey,
-        EnergyHoney
+        EnergyHoney,
+        Metal
     }
     FlaskType _type;
 

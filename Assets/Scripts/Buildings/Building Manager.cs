@@ -1,6 +1,6 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public enum RotationType
@@ -19,10 +19,12 @@ public class BuildingManager : MonoBehaviour
     private Ray _ray;
     private RaycastHit _hit;
     private LayerMask _mask;
-    [SerializeField] private Building _buildingPrefab; // Ноль префаба по оси y должен быть внизу
+    [SerializeField] private Building[] _buildingPrefabs; // Ноль префаба по оси y должен быть внизу
     private Building _building;
     [SerializeField] private Transform _buildingCarette;
-    
+
+    private int _prefabIndex;
+
     [SerializeField] private Base _base;
     
     private RotationType[] _rotationTypes = new RotationType[]
@@ -30,9 +32,14 @@ public class BuildingManager : MonoBehaviour
     private int _currentRotation = 0;
     
     private RotationType _rotationType = RotationType.Top;
+
+    private bool _isBlock, _deleteMod;
+
+    private MainStorage _mainStorage;
     
     private void Awake()
     {
+        _mainStorage = MainStorage.Instance;
         if (Instance == null)
         {
             Instance = this;
@@ -54,9 +61,11 @@ public class BuildingManager : MonoBehaviour
     void Update()
     {
         _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        
-        if (Physics.Raycast(_ray, out _hit, Mathf.Infinity,  _mask)  && _building != null)
+        bool canPurchase = _building.CheckResources(_mainStorage.ReturnResourcesCount());
+        if (Physics.Raycast(_ray, out _hit, Mathf.Infinity,  _mask)  && _building != null && canPurchase)
         {
+            
+            if (_isBlock) return;
             Transform platform = _hit.collider.transform;
             float width = platform.localScale.x; // ширина
             float height = platform.localScale.z; // высота
@@ -101,7 +110,8 @@ public class BuildingManager : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0) && _building.CanBuild)
             {
-                Instantiate(_buildingPrefab, _buildingCarette.position,
+                _building.Buy(_mainStorage.ReturnResourcesCount());
+                Instantiate(_buildingPrefabs[_prefabIndex], _buildingCarette.position,
                     _building.transform.rotation).GetComponent<Building>().SetMaterial(2);
             }
         }
@@ -120,10 +130,28 @@ public class BuildingManager : MonoBehaviour
 
     public void ChooseBuilding(int id)
     {
-        _building = Instantiate(_buildingPrefab, new Vector3(_buildingCarette.position.x - _buildingPrefab.Size.x, 
-                _buildingCarette.position.y, _buildingCarette.position.z - _buildingPrefab.Size.y),
+        _prefabIndex = id;
+        _building = Instantiate(_buildingPrefabs[_prefabIndex], new Vector3(_buildingCarette.position.x - _buildingPrefabs[_prefabIndex].Size.x, 
+                _buildingCarette.position.y, _buildingCarette.position.z - _buildingPrefabs[_prefabIndex].Size.y),
             Quaternion.identity, _buildingCarette).GetComponent<Building>();
         _building.SetMaterial(0);
+    }
+
+    public void StateBlock(bool state)
+    {
+        _isBlock = state;
+    }
+
+    public void DeleteBuiding()
+    {
+        if (!_building) return;
+        Destroy(_building.gameObject);
+        _building = null;
+    }
+
+    public void DeleteMod()
+    {
+        _deleteMod = !_deleteMod;
     }
 
     public void QuitBuildingMode()

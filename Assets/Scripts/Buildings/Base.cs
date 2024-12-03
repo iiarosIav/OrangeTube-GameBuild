@@ -10,19 +10,19 @@ public class Base : InteractiveObject
 
     private void Start()
     {
-        ChangeBuildingView(_isActive);
+        ChangeBuildingView();
     }
     
     public override void Interact()
     {
-        ChangeBuildingView(_isActive);
+        ChangeBuildingView();
     }
 
-    private void ChangeBuildingView(bool isActive)
+    private void ChangeBuildingView()
     {
-        _buildingCamera.gameObject.SetActive(isActive);
-        Player.Instance.gameObject.SetActive(!isActive);
-        BuildingManager.Instance.gameObject.SetActive(isActive);
+        _buildingCamera.gameObject.SetActive(_isActive);
+        Player.Instance.gameObject.SetActive(!_isActive);
+        BuildingManager.Instance.gameObject.SetActive(_isActive);
         _isActive = !_isActive;
     }
 }

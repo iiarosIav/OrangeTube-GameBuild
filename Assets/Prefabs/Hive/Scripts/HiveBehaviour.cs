@@ -73,7 +73,6 @@ public class HiveBehaviour : InteractiveObject
         {
             Player player = Player.Instance;
             if (player.GetFlask() != null) return;
-            Player.Instance.TakeHoney(HoneyCapacity);
             Player.Instance.SetFlusk(Flask.FlaskType.Honey);
             HoneyCapacity -= Flask.FlaskCapacity;
             Debug.Log("Devastated");

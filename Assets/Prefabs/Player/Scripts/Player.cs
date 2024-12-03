@@ -25,9 +25,6 @@ public class Player : MonoBehaviour
 
     private InteractiveObject _objectToInteract;
 
-    private float _honey;
-    private float _energyHoney;
-
     private Flask _flask;
 
     private void Awake()
@@ -100,15 +97,6 @@ public class Player : MonoBehaviour
     private void Interact()
     {
         _objectToInteract.Interact();
-    }
-
-    public void TakeHoney(float honey)
-    {
-        _honey += honey;
-    }
-    public void TakeEnergyHoney(float honey)
-    {
-        _energyHoney += honey;
     }
 
     public Flask GetFlask() => _flask;
