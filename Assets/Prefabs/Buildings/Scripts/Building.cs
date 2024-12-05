@@ -16,6 +16,15 @@ public class Product
 
 public class Building : InteractiveObject
 {
+    public enum BuildType
+    {
+        None,
+        RecyclingFactory,
+        Drill,
+        HoneyStorage,
+        MetalStorage,
+        MainStorage
+    }
     [SerializeField] private Renderer _model;
     [SerializeField] private BuildingCollider _collider;
     public Material _material;

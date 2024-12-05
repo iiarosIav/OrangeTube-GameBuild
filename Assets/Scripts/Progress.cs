@@ -14,7 +14,7 @@ using UnityEngine.UI;
 public class PlayerSave
 {
     public string name;
-    public Resources resources;
+    public ResourcesClass resources;
 }
 
 [Serializable]
@@ -23,7 +23,7 @@ public class PlayerSave
 //     public int honey = 10;
 // }
 
-public class Resources
+public class ResourcesClass
 {
     public PlayerState playerState = new PlayerState();
     public List<BuildingState> buildingStates = new List<BuildingState>() { new BuildingState() };
@@ -39,8 +39,7 @@ public class PlayerState
 [Serializable]
 public class BuildingState
 {
-    public string buildingType = "Building";
-    // public Building.Type buildingType;
+    public Building.BuildType buildingType;
     public Vector3 position = Vector3.zero;
     public Quaternion rotation = Quaternion.identity;
     public bool hasResources = false;
@@ -68,7 +67,7 @@ public class Progress : MonoBehaviour
         
         // playerSave.resources = GetResources();
         
-        playerSave.resources = new Resources();
+        playerSave.resources = new ResourcesClass();
 
         HttpWebRequest httpWebRequest;
         
@@ -96,9 +95,9 @@ public class Progress : MonoBehaviour
         }
     }
 
-    private Resources GetResources()
+    private ResourcesClass GetResources()
     {
-        Resources resources = new Resources();
+        ResourcesClass resources = new ResourcesClass();
         resources.playerState = GetPlayerState();
         resources.buildingStates = GetBuildingStates();
         return resources;
@@ -208,13 +207,26 @@ public class Progress : MonoBehaviour
 
                 foreach (BuildingState buildingstate in player.resources.buildingStates)
                 {
-                    Building building = Instantiate(buildingPrefab, buildingstate.position,
-                        buildingstate.rotation); // Нужны buildingPrefab'ы по типам
+                    Building building = Instantiate(PickBuilding(buildingstate.buildingType), buildingstate.position,
+                        buildingstate.rotation).GetComponent<Building>(); // Нужны buildingPrefab'ы по типам
                     if (buildingstate.hasResources == false) continue;
                     building.GetComponent<Storage>().SetResources(buildingstate.resources);
                 }
             }
         }
+    }
+
+    public GameObject PickBuilding(Building.BuildType type)
+    {
+        var bTypes = Resources.Load<BuildingTypes>("BuildingTypes");
+        if (!bTypes) return null;
+        GameObject gameObject = null;
+        foreach (var bType in bTypes.BuildTypes)
+        {
+            if (bType.GetBuildingType() == type) gameObject = bType.GetPrefab();
+        }
+
+        return gameObject;
     }
 
     public void Delete(string username)
