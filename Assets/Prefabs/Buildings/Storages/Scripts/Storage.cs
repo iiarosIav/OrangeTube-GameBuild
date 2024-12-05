@@ -27,12 +27,9 @@ public class Storage : InteractableBuilding
         if (CapacityText) CapacityText.text = $"{resource.ResourceType} count: {resource.GetAmount()}/{resource.GetCapacity()}";
     }
 
-    public Resource[] ReturnResourcesCount()
-    {
-        return Resources;
-    }
+    public Resource[] ReturnResourcesCount() => Resources;
 
-    public void SetResources(Product[] products)
+    public void ReturnResources(Product[] products)
     {
         for (int i = 0; i < Resources.Length; i++)
         {
@@ -43,4 +40,6 @@ public class Storage : InteractableBuilding
             }
         }
     }
+    
+    public void SetResources(Resource[] resources) => Resources = resources;
 }
