@@ -35,13 +35,10 @@ public class BuildingManager : MonoBehaviour
 
     private bool _isBlock, _deleteMod;
 
-    private MainStorage _mainStorage;
-
     [SerializeField] private TakeAndGiveQuest GiveQuest, TakeQuest, WaitQuest;
 
     private void Awake()
     {
-        _mainStorage = MainStorage.Instance;
         if (Instance == null)
         {
             Instance = this;
@@ -63,7 +60,7 @@ public class BuildingManager : MonoBehaviour
     {
         if (!_building) return;
         _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        bool canPurchase = _building.CheckResources(_mainStorage.ReturnResourcesCount());
+        bool canPurchase = _building.CheckResources(MainStorage.Instance.ReturnResourcesCount());
         if (Physics.Raycast(_ray, out _hit, Mathf.Infinity,  _mask)  && _building != null && canPurchase)
         {
             
@@ -112,7 +109,7 @@ public class BuildingManager : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0) && _building.CanBuild)
             {
-                _building.Buy(_mainStorage.ReturnResourcesCount());
+                _building.Buy(MainStorage.Instance.ReturnResourcesCount());
                 var build = Instantiate(_buildingPrefabs[_prefabIndex], _buildingCarette.position,
                     _building.transform.rotation).GetComponent<Building>();
                 build.SetMaterial(2);

@@ -6,7 +6,14 @@ public class MainStorage : Storage
 
     void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         
     }
 }

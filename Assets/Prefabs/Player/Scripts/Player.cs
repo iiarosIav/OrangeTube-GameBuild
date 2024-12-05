@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     
     [SerializeField] private float _mouseSencetivity = 1f;
     [SerializeField] private Transform _cameraTransform;
+    
+    private bool _isStatic;
 
     private float _xAngle;
     private bool _grounded;
@@ -48,6 +50,8 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (_isStatic) return;
+        
         Movement();
 
         if (Input.GetKeyDown(KeyCode.E) && _objectToInteract != null)
@@ -171,5 +175,11 @@ public class Player : MonoBehaviour
 
         _playerModel.localEulerAngles = endRotation;
         _rotRoutine = false;
+    }
+
+    public void SetIsStatic(bool isStatic)
+    {
+        _isStatic = isStatic;
+        _cameraTransform.gameObject.SetActive(!isStatic);
     }
 }

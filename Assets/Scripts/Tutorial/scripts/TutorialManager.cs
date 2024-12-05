@@ -23,20 +23,27 @@ public class TutorialManager : MonoBehaviour
 
     public void Run(int index = 0)
     {
-        this._index = index;
-        _quests[this._index].OnComplete += OnComplete;
-        _quests[this._index].RunQuest();
+        _index = index;
+        _quests[_index].OnComplete += OnComplete;
+        _quests[_index].RunQuest();
     }
 
     void OnComplete()
     {
-        _quests[this._index].OnComplete -= OnComplete;
+        _quests[_index].OnComplete -= OnComplete;
         _index++;
-        if(this._index < _quests.Count)
+        if(_index < _quests.Count)
         {
             _quests[_index].OnComplete += OnComplete;
             _quests[_index].RunQuest();
         }
         else isComplete = true;
     }
+    
+    public void Complete() => isComplete = true;
+    
+    public bool GetIsComplete() => isComplete;
+
+    public int GetTutorialIndex() => _index;
+
 }

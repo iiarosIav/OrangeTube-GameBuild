@@ -16,7 +16,7 @@ public class BuildingCollider : MonoBehaviour
         }
         if (other.gameObject.layer != 3)
         {
-            Debug.Log(other.gameObject.name);
+            // Debug.Log(other.gameObject.name);
             Obstacles++;
             _building.SetMaterial(1);
         }

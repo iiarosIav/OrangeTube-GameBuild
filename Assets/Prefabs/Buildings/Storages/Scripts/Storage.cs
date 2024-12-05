@@ -40,6 +40,13 @@ public class Storage : InteractableBuilding
             }
         }
     }
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        
+        foreach (Resource r in Resources) { r.Initialize(); r.SetCapacity(Capacity); }
+    }
     
     public void SetResources(Resource[] resources) => Resources = resources;
 }

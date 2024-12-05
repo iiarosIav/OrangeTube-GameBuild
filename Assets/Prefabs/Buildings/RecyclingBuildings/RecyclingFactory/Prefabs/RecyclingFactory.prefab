@@ -751,6 +751,7 @@ MonoBehaviour:
   _model: {fileID: 4530326283780854318}
   _collider: {fileID: 2661909354493736727}
   _material: {fileID: 0}
+  _buildType: 1
   CanBuild: 0
   _price:
   - _count: 1
@@ -762,6 +763,9 @@ MonoBehaviour:
   _invalid: {fileID: 2100000, guid: 7d56fcf164973744fab4e426bc75b95f, type: 2}
   _static: {fileID: 2100000, guid: 8050006af3705b947983319bae729bd2, type: 2}
   _deleteButton: {fileID: 2995582662930199353}
+  Give: {fileID: 554319723829925992}
+  Take: {fileID: 1144906107069582460}
+  Wait: {fileID: 0}
   Menu: {fileID: 7785879464798152974}
   GivenResource:
     _capacity: 0
@@ -784,8 +788,6 @@ MonoBehaviour:
   ReadyBar: {fileID: 2199049038032500302}
   CapacityBar: {fileID: 7148638445796569040}
   CapacityText: {fileID: 7625500671631575907}
-  Give: {fileID: 554319723829925992}
-  Take: {fileID: 1144906107069582460}
 --- !u!135 &144005456506218990
 SphereCollider:
   m_ObjectHideFlags: 0

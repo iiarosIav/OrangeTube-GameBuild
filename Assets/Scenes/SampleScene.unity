@@ -559,6 +559,50 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
+--- !u!1 &207640607
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 207640609}
+  - component: {fileID: 207640608}
+  m_Layer: 0
+  m_Name: Progress
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &207640608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 207640607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b96e0be5adb692143ba1648151314d58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &207640609
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 207640607}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.6700408, y: -2.6128664, z: -1.5715046}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &212885424
 GameObject:
   m_ObjectHideFlags: 0
@@ -6145,7 +6189,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 89
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -6224,7 +6268,7 @@ Transform:
   m_GameObject: {fileID: 1648753872}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalPosition: {x: 0, y: 12.82, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7805,6 +7849,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainStorage
       objectReference: {fileID: 0}
+    - target: {fileID: 5832245059838431151, guid: a60cb5ea2d4011543afff4f01850e6e6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8320850751188032434, guid: a60cb5ea2d4011543afff4f01850e6e6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8720,6 +8769,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 5900655639274521705, guid: 0b32b94c735939841bc4b92137432d89,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6549089778272665473, guid: 0b32b94c735939841bc4b92137432d89,
         type: 3}
       propertyPath: m_Layer
@@ -8930,3 +8984,4 @@ SceneRoots:
   - {fileID: 1881097199}
   - {fileID: 1923489042}
   - {fileID: 1777868084}
+  - {fileID: 207640609}

@@ -18,11 +18,6 @@ public class PlayerSave
 }
 
 [Serializable]
-// public class Resources
-// {
-//     public int honey = 10;
-// }
-
 public class ResourcesClass
 {
     public PlayerState playerState = new PlayerState();
@@ -34,6 +29,8 @@ public class PlayerState
 {
     public Vector3 position = Vector3.zero;
     public Flask.FlaskType resourceType = Flask.FlaskType.None;
+    public bool completeTutorial = false;
+    public int tutorialIndex = 0;
 }
 
 [Serializable]
@@ -44,49 +41,62 @@ public class BuildingState
     public Quaternion rotation = Quaternion.identity;
     public bool hasResources = false;
     public Resource[] resources = Array.Empty<Resource>();
-    
 }
 
 public class Progress : MonoBehaviour
 {
+    public static Progress Instance;
+
     private static HttpClient client = new HttpClient();
-    
+
     private string game_uuid = "c26f88d5-41f6-4443-81ce-cf55303a8f44";
-    
+
     private string _username = "user_with_apples1"; // надо запрос на имя пользователя
-    
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     [ContextMenu("Save")]
     public void Save()
     {
         string username = _username;
-        
+
         bool injson = CheckInJson(username);
-        
+
         PlayerSave playerSave = new PlayerSave();
         playerSave.name = username;
-        
-        // playerSave.resources = GetResources();
-        
-        playerSave.resources = new ResourcesClass();
+
+        playerSave.resources = GetResources();
 
         HttpWebRequest httpWebRequest;
-        
+
         if (injson)
         {
-            Delete(username);
+            Delete();
         }
-        
+
         string json = JsonUtility.ToJson(playerSave);
-        httpWebRequest = (HttpWebRequest)WebRequest.Create($"https://2025.nti-gamedev.ru/api/games/{game_uuid}/players/");
+        httpWebRequest =
+            (HttpWebRequest)WebRequest.Create($"https://2025.nti-gamedev.ru/api/games/{game_uuid}/players/");
         httpWebRequest.Method = "POST";
-        
+
         httpWebRequest.ContentType = "application/json";
-        
+
         using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
         {
             streamWriter.Write(json);
         }
-        
+
         var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
         using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
         {
@@ -106,16 +116,22 @@ public class Progress : MonoBehaviour
     private PlayerState GetPlayerState()
     {
         PlayerState playerState = new PlayerState();
-        
+
         var flask = Player.Instance.GetFlask();
 
         if (flask != null)
         {
             playerState.resourceType = flask.GetFlaskType();
         }
+
+        TutorialManager tutorialManager = FindObjectOfType<TutorialManager>();
+
+        playerState.completeTutorial = tutorialManager.GetIsComplete();
         
+        playerState.tutorialIndex = tutorialManager.GetTutorialIndex();
+
         playerState.position = Player.Instance.transform.position;
-        
+
         return playerState;
     }
 
@@ -129,6 +145,7 @@ public class Progress : MonoBehaviour
             // buildingState.buildingType = building.Type; // Нужна переменная у класса Builduing - Building.Type
             buildingState.position = building.transform.position;
             buildingState.rotation = building.transform.rotation;
+            buildingState.buildingType = building.GetBuildType();
             if (building.gameObject.GetComponent<Storage>())
             {
                 buildingState.hasResources = true;
@@ -138,30 +155,22 @@ public class Progress : MonoBehaviour
             {
                 buildingState.resources = Array.Empty<Resource>();
             }
+
             buildingStates.Add(buildingState);
         }
-        return buildingStates;
-    }
 
-    [ContextMenu("GetJson")]
-    private void GetJson()
-    {
-        Task<string> response = client.GetStringAsync(
-            $"https://2025.nti-gamedev.ru/api/games/{game_uuid}/players/");
-        
-        string json =  response.Result;
-        Debug.Log(json);
+        return buildingStates;
     }
 
     private bool CheckInJson(string username)
     {
         Task<string> response = client.GetStringAsync(
             $"https://2025.nti-gamedev.ru/api/games/{game_uuid}/players/");
-        
-        string json =  response.Result;
-        
+
+        string json = response.Result;
+
         PlayerSave[] saveList = ZVJson.FromJson<PlayerSave>(json, true);
-        
+
         foreach (var player in saveList)
         {
             if (player.name == username)
@@ -178,11 +187,11 @@ public class Progress : MonoBehaviour
     {
         Task<string> response = client.GetStringAsync(
             $"https://2025.nti-gamedev.ru/api/games/{game_uuid}/players/");
-        
-        string json =  response.Result;
-        
+
+        string json = response.Result;
+
         PlayerSave[] saveList = ZVJson.FromJson<PlayerSave>(json, true);
-        
+
         foreach (var player in saveList)
         {
             if (player.name == _username)
@@ -192,9 +201,15 @@ public class Progress : MonoBehaviour
                 {
                     Destroy(building.gameObject);
                 }
-                
+
                 PlayerState playerState = player.resources.playerState;
                 
+                TutorialManager tutorialManager = FindObjectOfType<TutorialManager>();
+
+                if (playerState.completeTutorial) tutorialManager.Complete();
+                
+                tutorialManager.Run(playerState.tutorialIndex);
+
                 Player.Instance.transform.position = playerState.position;
                 if (playerState.resourceType != Flask.FlaskType.None)
                 {
@@ -208,7 +223,8 @@ public class Progress : MonoBehaviour
                 foreach (BuildingState buildingstate in player.resources.buildingStates)
                 {
                     Building building = Instantiate(PickBuilding(buildingstate.buildingType), buildingstate.position,
-                        buildingstate.rotation).GetComponent<Building>(); // Нужны buildingPrefab'ы по типам
+                        buildingstate.rotation).GetComponent<Building>();
+                    building.Initialize();
                     if (buildingstate.hasResources == false) continue;
                     building.GetComponent<Storage>().SetResources(buildingstate.resources);
                 }
@@ -216,7 +232,7 @@ public class Progress : MonoBehaviour
         }
     }
 
-    public GameObject PickBuilding(Building.BuildType type)
+    private GameObject PickBuilding(Building.BuildType type)
     {
         var bTypes = Resources.Load<BuildingTypes>("BuildingTypes");
         if (!bTypes) return null;
@@ -228,10 +244,21 @@ public class Progress : MonoBehaviour
 
         return gameObject;
     }
+    
+    [ContextMenu("GetJson")]
+    private void GetJson()
+    {
+        Task<string> response = client.GetStringAsync(
+            $"https://2025.nti-gamedev.ru/api/games/{game_uuid}/players/");
 
-    public void Delete(string username)
+        string json = response.Result;
+        Debug.Log(json);
+    }
+
+    [ContextMenu("Delete")]
+    public void Delete()
     {
         Task<HttpResponseMessage> response = client.DeleteAsync(
-            $"https://2025.nti-gamedev.ru/api/games/{game_uuid}/players/{username}");
+            $"https://2025.nti-gamedev.ru/api/games/{game_uuid}/players/{_username}");
     }
 }

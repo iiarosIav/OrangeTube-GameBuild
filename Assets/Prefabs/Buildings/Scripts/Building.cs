@@ -27,7 +27,8 @@ public class Building : InteractiveObject
     }
     [SerializeField] private Renderer _model;
     [SerializeField] private BuildingCollider _collider;
-    public Material _material;
+    private Material _material;
+    [SerializeField]private BuildType _buildType;
 
     public (float x, float y) Size;
     
@@ -100,11 +101,14 @@ public class Building : InteractiveObject
     {
         _material = _model.material;
         _material.color = _static.color;
-        Vector3 size = _collider.gameObject.GetComponent<Collider>().bounds.size;
-        Debug.Log(size);
-        float x = size.x;
-        float y = size.z;
-        Size = (x, y);
+        if(_collider != null)
+        {
+            Vector3 size = _collider.gameObject.GetComponent<Collider>().bounds.size;
+            Debug.Log(size);
+            float x = size.x;
+            float y = size.z;
+            Size = (x, y);
+        }
     }
 
     public bool GetState() { return _isStatic; }
@@ -132,12 +136,20 @@ public class Building : InteractiveObject
         }
     }
 
+    public virtual void Initialize()
+    {
+        Started();
+        _isStatic = true;
+    }
+
     public void RotateCollider()
     {
         Size = (Size.y, Size.x);
     }
 
     public int GetObstacles() => _collider.Obstacles;
+    
+    public BuildType GetBuildType() => _buildType;
 
     // private void OnCollisionEnter(Collision other)
     // {

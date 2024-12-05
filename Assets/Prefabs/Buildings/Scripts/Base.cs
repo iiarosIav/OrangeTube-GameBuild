@@ -21,7 +21,7 @@ public class Base : InteractiveObject
     private void ChangeBuildingView()
     {
         _buildingCamera.gameObject.SetActive(_isActive);
-        Player.Instance.gameObject.SetActive(!_isActive);
+        Player.Instance.SetIsStatic(_isActive);
         BuildingManager.Instance.gameObject.SetActive(_isActive);
         _isActive = !_isActive;
     }
