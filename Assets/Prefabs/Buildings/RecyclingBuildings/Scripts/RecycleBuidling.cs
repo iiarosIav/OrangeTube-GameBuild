@@ -39,10 +39,10 @@ public class RecycleBuidling : InteractableBuilding
     protected void ChangeValues()
     {
         if(CapacityBar) { CapacityBar.maxValue = RecievedResource.GetCapacity(); CapacityBar.value = RecievedResource.GetAmount(); }
-        if (CapacityText) CapacityText.text = $"Заполненность: {RecievedResource.GetAmount()}/{RecievedResource.GetCapacity()}";
+        if (CapacityText) CapacityText.text = $"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: {RecievedResource.GetAmount()}/{RecievedResource.GetCapacity()}";
     }
 
-    public void SetValue() //Игрок отдал мед
+    public void SetValue() //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
     {
         Player player = Player.Instance;
         if (player.GetFlask() == null) return;
@@ -54,7 +54,7 @@ public class RecycleBuidling : InteractableBuilding
             Debug.Log($"Player give honey, given capacity: {GivenResource.GetAmount()}, recieved capacity: {RecievedResource.GetCapacity()}");
         }
     }
-    public void TakeValue() //Игрок забрал мед
+    public void TakeValue() //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
     {
         Player player = Player.Instance;
         if (player.GetFlask() != null) return;
@@ -82,5 +82,15 @@ public class RecycleBuidling : InteractableBuilding
         }
         if (!ReadyBar) return;
         ReadyBar.value = 100 * (Time.time - timer) / _recycleTime;
+    }
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        
+        GivenResource.SetCapacity(Capacity);
+        RecievedResource.SetCapacity(Capacity);
+        GivenResource.Initialize();
+        RecievedResource.Initialize();
     }
 }
