@@ -580,12 +580,17 @@ MonoBehaviour:
   _collider: {fileID: 0}
   _material: {fileID: 0}
   CanBuild: 0
+  _price: []
+  _isStatic: 0
   _valid: {fileID: 0}
   _invalid: {fileID: 0}
   _static: {fileID: 0}
+  _deleteButton: {fileID: 0}
   Menu: {fileID: 0}
   Resources:
-  - ResourceType: 0
+  - _capacity: 10
+    _count: 0
+    ResourceType: 0
     GetButton: {fileID: 0}
     SetButton: {fileID: 0}
     Bar: {fileID: 0}

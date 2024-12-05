@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     private bool _grounded;
 
     private bool _rotRoutine;
+    private bool _cameraFreeze;
 
     private GameObject _floor;
 
@@ -58,7 +59,12 @@ public class Player : MonoBehaviour
             SetFlaskNull();
             Debug.Log("Delete Flask");
         }
+        if(Input.GetKey(KeyCode.LeftAlt)) FreezeCamera();
+        else UnFreezeCamera();
     }
+
+    private void FreezeCamera() => _cameraFreeze = true;
+    private void UnFreezeCamera() => _cameraFreeze = false;
 
     private void Movement()
     {
@@ -76,7 +82,7 @@ public class Player : MonoBehaviour
 
         Vector3 inputVector = new Vector3(horizontalInput, 0, verticalInput);
 
-        _cameraTransform.localEulerAngles += new Vector3(0f, mouseX * _mouseSencetivity, 0f);
+        if (!_cameraFreeze) { _cameraTransform.localEulerAngles += new Vector3(0f, mouseX * _mouseSencetivity, 0f); }
         if (inputVector != Vector3.zero && !_rotRoutine)
         {
             _rotRoutine = true;

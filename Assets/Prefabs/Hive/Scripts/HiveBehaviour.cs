@@ -14,6 +14,7 @@ public class HiveBehaviour : InteractiveObject
 
     private List<Bee> _bees_Exists = new List<Bee>();
     public Slider Slider;
+    [SerializeField] private TakeAndGiveQuest TakeQuest;
 
     public float HoneyCapacity
     {
@@ -76,6 +77,7 @@ public class HiveBehaviour : InteractiveObject
             Player.Instance.SetFlusk(Flask.FlaskType.Honey);
             HoneyCapacity -= Flask.FlaskCapacity;
             Debug.Log("Devastated");
+            TakeQuest.Click();
         }
         else // если нет, то выводим количество меда
         {
