@@ -32,9 +32,7 @@ public class Storage : InteractableBuilding
         return Resources;
     }
 
-    public void SetResources(Resource[] resources) => Resources = resources;
-
-    public void ReturnResources(Product[] products)
+    public void SetResources(Product[] products)
     {
         for (int i = 0; i < Resources.Length; i++)
         {

@@ -50,7 +50,7 @@ public class Building : InteractiveObject
     protected void DestroyThis()
     {
         Destroy(gameObject);
-        MainStorage.Instance.ReturnResources(GetProduct());
+        MainStorage.Instance.SetResources(GetProduct());
     }
 
     private void Awake()
