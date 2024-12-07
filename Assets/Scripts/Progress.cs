@@ -22,6 +22,7 @@ public class ResourcesClass
 {
     public PlayerState playerState = new PlayerState();
     public List<BuildingState> buildingStates = new List<BuildingState>() { new BuildingState() };
+    public List<HiveState> hiveStates = new List<HiveState>() { new HiveState() };
 }
 
 [Serializable]
@@ -41,6 +42,16 @@ public class BuildingState
     public Quaternion rotation = Quaternion.identity;
     public bool hasResources = false;
     public Resource[] resources = Array.Empty<Resource>();
+}
+
+[Serializable]
+public class HiveState
+{
+    public Building.BuildType buildingType = Building.BuildType.Hive;
+    public Vector3 position = Vector3.zero;
+    public Quaternion rotation = Quaternion.identity;
+    public float honeyCapacity = 0f;
+    public TakeAndGiveQuest takeAndGiveQuest = null;
 }
 
 public class Progress : MonoBehaviour
@@ -116,6 +127,7 @@ public class Progress : MonoBehaviour
         ResourcesClass resources = new ResourcesClass();
         resources.playerState = GetPlayerState();
         resources.buildingStates = GetBuildingStates();
+        resources.hiveStates = GetHiveStates();
         return resources;
     }
 
@@ -165,6 +177,23 @@ public class Progress : MonoBehaviour
         }
 
         return buildingStates;
+    }
+
+    private List<HiveState> GetHiveStates()
+    {
+        List<HiveState> hiveStates = new List<HiveState>();
+        HiveBehaviour[] hives = FindObjectsOfType<HiveBehaviour>();
+        foreach (HiveBehaviour hive in hives)
+        {
+            HiveState hiveState = new HiveState();
+            hiveState.position = hive.transform.position;
+            hiveState.rotation = hive.transform.rotation;
+            hiveState.honeyCapacity = hive.HoneyCapacity;
+            hiveState.takeAndGiveQuest = hive.GetQuest();
+            hiveStates.Add(hiveState);
+        }
+
+        return hiveStates;
     }
 
     private bool CheckInJson(string username)
@@ -223,9 +252,16 @@ public class Progress : MonoBehaviour
             if (player.name == _username)
             {
                 Building[] buildings = FindObjectsOfType<Building>();
+                HiveBehaviour[] hiveBehaviours = FindObjectsOfType<HiveBehaviour>();
+        
                 foreach (Building building in buildings)
                 {
                     Destroy(building.gameObject);
+                }
+
+                foreach (HiveBehaviour hiveBehaviour in hiveBehaviours)
+                {
+                    Destroy(hiveBehaviour.gameObject);
                 }
 
                 PlayerState playerState = player.resources.playerState;
@@ -255,6 +291,16 @@ public class Progress : MonoBehaviour
                     if (buildingstate.hasResources == false) continue;
                     building.GetComponent<Storage>().SetResources(buildingstate.resources);
                 }
+
+                foreach (HiveState hiveState in player.resources.hiveStates)
+                {
+                    HiveBehaviour hive = Instantiate(PickBuilding(hiveState.buildingType), 
+                        hiveState.position, hiveState.rotation).GetComponent<HiveBehaviour>();
+                    hive.HoneyCapacity = hiveState.honeyCapacity;
+                    hive.SetQuest(hiveState.takeAndGiveQuest);
+                }
+                
+                return;
             }
         }
     }

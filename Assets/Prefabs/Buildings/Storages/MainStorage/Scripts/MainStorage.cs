@@ -10,5 +10,6 @@ public class MainStorage : Storage
         {
             Instance = this;
         }
+        Instance = this;
     }
 }

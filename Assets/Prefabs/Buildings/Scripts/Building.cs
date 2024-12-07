@@ -23,7 +23,7 @@ public class Building : InteractiveObject
         HoneyStorage,
         MetalStorage,
         MainStorage,
-        None
+        Hive
     }
     [SerializeField] private Renderer _model;
     [SerializeField] private BuildingCollider _collider;
