@@ -84,4 +84,8 @@ public class HiveBehaviour : InteractiveObject
             Debug.Log($"Unfilled, honey level is {Convert.ToInt32(HoneyCapacity)}");
         }
     }
+    
+    public TakeAndGiveQuest GetQuest() => TakeQuest;
+    
+    public void SetQuest(TakeAndGiveQuest quest) => TakeQuest = quest;
 }

@@ -262,6 +262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4312284913558565425}
   - component: {fileID: 9054281297775563387}
+  - component: {fileID: -5374115708105955527}
   m_Layer: 8
   m_Name: Hive
   m_TagString: Untagged
@@ -302,6 +303,28 @@ MonoBehaviour:
     type: 3}
   BeesAmount: 5
   Slider: {fileID: 731588898094965710}
+  TakeQuest: {fileID: 0}
+--- !u!135 &-5374115708105955527
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5900655639274521705}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6549089778272665473
 GameObject:
   m_ObjectHideFlags: 0

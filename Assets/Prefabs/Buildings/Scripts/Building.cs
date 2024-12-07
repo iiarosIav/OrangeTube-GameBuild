@@ -23,7 +23,8 @@ public class Building : InteractiveObject
         Drill,
         HoneyStorage,
         MetalStorage,
-        MainStorage
+        MainStorage,
+        Hive
     }
     [SerializeField] private Renderer _model;
     [SerializeField] private BuildingCollider _collider;
