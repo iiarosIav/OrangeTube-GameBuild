@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [Serializable]
@@ -235,6 +236,19 @@ public class Progress : MonoBehaviour
         }
         if (a > 0) return true;
         else return false;
+    }
+
+    public void SaveAndLeaveMenu()
+    {
+        Save();
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void SaveAndQuit()
+    {
+        Save();
+        Application.Quit();
     }
 
     [ContextMenu("Load")]

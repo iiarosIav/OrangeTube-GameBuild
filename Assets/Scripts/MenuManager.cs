@@ -94,7 +94,7 @@ public class Menu : MonoBehaviour
         if (!Progress.isExistPlayer(NickInputField.text)) NickInputField.text = "Несуществующий игрок";
         if(!canStart || !Progress.isExistPlayer(NickInputField.text)) return;
         if (level.Length > 0) SceneManager.LoadScene(level);
-        PlayerData.SetContinue();
+        PlayerData.SetContinue(true);
     }
 
     public void LoadNewGame(string level)

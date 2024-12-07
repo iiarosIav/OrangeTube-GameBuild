@@ -350,8 +350,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -484,8 +484,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1364,8 +1364,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1698,12 +1698,17 @@ PrefabInstance:
     - target: {fileID: 6596373659906787572, guid: e1313907c6a3f0a48b73e89d5cd378dd,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.05
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 6596373659906787572, guid: e1313907c6a3f0a48b73e89d5cd378dd,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.05
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6596373659906787572, guid: e1313907c6a3f0a48b73e89d5cd378dd,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6596373659906787572, guid: e1313907c6a3f0a48b73e89d5cd378dd,
         type: 3}
@@ -1718,7 +1723,7 @@ PrefabInstance:
     - target: {fileID: 6596373659906787572, guid: e1313907c6a3f0a48b73e89d5cd378dd,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.12876521
       objectReference: {fileID: 0}
     - target: {fileID: 6596373659906787572, guid: e1313907c6a3f0a48b73e89d5cd378dd,
         type: 3}
@@ -1743,12 +1748,12 @@ PrefabInstance:
     - target: {fileID: 6596373659906787572, guid: e1313907c6a3f0a48b73e89d5cd378dd,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 0.06250282
       objectReference: {fileID: 0}
     - target: {fileID: 6596373659906787572, guid: e1313907c6a3f0a48b73e89d5cd378dd,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.5
+      value: 1.3712308
       objectReference: {fileID: 0}
     - target: {fileID: 6596373659906787572, guid: e1313907c6a3f0a48b73e89d5cd378dd,
         type: 3}

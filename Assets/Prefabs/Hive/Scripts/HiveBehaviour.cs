@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HiveBehaviour : InteractiveObject
+public class HiveBehaviour : Building
 {
     public Bee BeeModel;
     public int BeesAmount;
 
     private float _honeyCapacity;
     private float _maxCapacity = 100;
+    [SerializeField] float _beeSpeed;
     private int _level;
 
     private List<Bee> _bees_Exists = new List<Bee>();
@@ -51,6 +52,8 @@ public class HiveBehaviour : InteractiveObject
     private void SpawnBee()
     {
         Bee bee = Instantiate(BeeModel, transform);
+
+        bee.SetSpeed(_beeSpeed);
 
         bee.transform.position = transform.position;
         bee.transform.rotation = Quaternion.identity;

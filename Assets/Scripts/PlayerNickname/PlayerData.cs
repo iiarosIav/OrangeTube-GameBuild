@@ -10,5 +10,5 @@ public class PlayerData
 
     public static bool IsContinue() => isContinue;
 
-    public static void SetContinue() => isContinue = true;
+    public static void SetContinue(bool state) => isContinue = state;
 }

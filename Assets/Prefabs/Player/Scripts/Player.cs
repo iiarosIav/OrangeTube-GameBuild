@@ -69,8 +69,8 @@ public class Player : MonoBehaviour
         else UnFreezeCamera();
     }
 
-    private void FreezeCamera() => _cameraFreeze = true;
-    private void UnFreezeCamera() => _cameraFreeze = false;
+    public void FreezeCamera() => _cameraFreeze = true;
+    public void UnFreezeCamera() => _cameraFreeze = false;
 
     private void Movement()
     {

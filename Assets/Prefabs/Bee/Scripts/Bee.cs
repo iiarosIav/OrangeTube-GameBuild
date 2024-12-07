@@ -6,8 +6,8 @@ public class Bee : MonoBehaviour
 {
     public float MaxPollenAmount;
 
-    private int _level;
-    private float _speed;
+    [SerializeField]private int _level;
+    [SerializeField]private float _speed;
     private float _pollenAmount;
     private float _collectAtTime;
 
@@ -30,11 +30,13 @@ public class Bee : MonoBehaviour
         }
     }
 
+    public void SetSpeed(float speed) => _speed = speed;
+
     private void ChangeStats(int _level)
     {
         _speed = Mathf.Pow(_level, 1.25f);
         if(_agent) _agent.speed = _speed;
-        MaxPollenAmount = _level * 10;
+        MaxPollenAmount = _level;
         _collectAtTime = MaxPollenAmount / 5;
     }
 
@@ -51,19 +53,23 @@ public class Bee : MonoBehaviour
         _speed = _agent.speed;
         SetNewDestination();
         _target_height = Random.Range(0, 3f);
-        Level = 8;
+        Level = 4;
     }
 
     private void Update()
     {
-        if (_agent.remainingDistance < 0.1f)
+        _agent.speed = _speed;
+        try
         {
-            SetNewDestination();
-            if (Vector3.Distance(_agent.transform.position, ParentHive.transform.position) < 0.5f)
+            if (_agent.remainingDistance < 0.1f)
             {
-                ConvertPollen();
+                SetNewDestination();
+                if (Vector3.Distance(_agent.transform.position, ParentHive.transform.position) < 0.5f)
+                {
+                    ConvertPollen();
+                }
             }
-        }
+        } catch { }
     }
 
     void ConvertPollen()

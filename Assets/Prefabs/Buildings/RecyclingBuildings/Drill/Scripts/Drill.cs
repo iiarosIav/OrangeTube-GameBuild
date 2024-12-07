@@ -28,10 +28,12 @@ public class Drill : RecycleBuidling
                 case true:
                     WarningText.text = ValidText;
                     WarningText.color = Color.green;
+                    SetMaterial(0);
                     break;
                 case false:
                     WarningText.text = InvalidText;
                     WarningText.color = Color.red;
+                    SetMaterial(1);
                     break;
             }
         else Destroy(WarningText);
@@ -41,7 +43,8 @@ public class Drill : RecycleBuidling
     {
 
         RaycastHit _hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         return 
-            Physics.Raycast(transform.position, Vector3.down, out _hit, _mask);
+            Physics.Raycast(ray, out _hit, Mathf.Infinity, _mask);
     }
 }

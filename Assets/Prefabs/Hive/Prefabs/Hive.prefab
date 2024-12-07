@@ -299,9 +299,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 410288227371eca468dae7be1dba09e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _model: {fileID: 6875248818436180654}
+  _collider: {fileID: 8912518749670468191}
+  _buildType: 5
+  CanBuild: 0
+  _price: []
+  _isStatic: 0
+  _valid: {fileID: -6922793697723135513, guid: 7786241dc5547d848b49fcc0b2908728, type: 3}
+  _invalid: {fileID: 2100000, guid: 7d56fcf164973744fab4e426bc75b95f, type: 2}
+  _static: {fileID: -6478536213147159724, guid: d3051e3d24f431b41b06f8d8dcaad19c,
+    type: 3}
+  _deleteButton: {fileID: 0}
+  Give: {fileID: 0}
+  Take: {fileID: 0}
+  Wait: {fileID: 0}
   BeeModel: {fileID: 5797576814974789011, guid: 63811af675491f043b10c4d8620fb528,
     type: 3}
   BeesAmount: 5
+  _beeSpeed: 0
   Slider: {fileID: 731588898094965710}
   TakeQuest: {fileID: 0}
 --- !u!135 &-5374115708105955527
@@ -536,6 +551,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1398255511986936247}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 64eb19c1f992ec74daec1913e4ada570,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8912518749670468191}
   m_SourcePrefab: {fileID: 100100000, guid: 64eb19c1f992ec74daec1913e4ada570, type: 3}
 --- !u!1 &4929530845242305403 stripped
 GameObject:
@@ -565,9 +584,29 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -462981019419857548, guid: 64eb19c1f992ec74daec1913e4ada570, type: 3}
+--- !u!114 &8912518749670468191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4929530845242305403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52ad0a5b8779bc04d92b17d56ac3e1ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _building: {fileID: 9054281297775563387}
+  Obstacles: 0
 --- !u!4 &5702373528541589953 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 64eb19c1f992ec74daec1913e4ada570,
+    type: 3}
+  m_PrefabInstance: {fileID: 5235540113491138090}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &6875248818436180654 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 64eb19c1f992ec74daec1913e4ada570,
     type: 3}
   m_PrefabInstance: {fileID: 5235540113491138090}
   m_PrefabAsset: {fileID: 0}

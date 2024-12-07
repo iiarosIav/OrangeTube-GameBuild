@@ -39,7 +39,7 @@ public class RecycleBuidling : InteractableBuilding
     protected void ChangeValues()
     {
         if(CapacityBar) { CapacityBar.maxValue = RecievedResource.GetCapacity(); CapacityBar.value = RecievedResource.GetAmount(); }
-        if (CapacityText) CapacityText.text = $"�������������: {RecievedResource.GetAmount()}/{RecievedResource.GetCapacity()}";
+        if (CapacityText) CapacityText.text = $"Всего: {RecievedResource.GetAmount()}/{RecievedResource.GetCapacity()}";
     }
 
     public void SetValue() //����� ����� ���
