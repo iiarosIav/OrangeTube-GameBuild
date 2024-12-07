@@ -33,14 +33,14 @@ public class Menu : MonoBehaviour
     {
         if (NickInputField.text.Length < 1)
         {
-            NickInputField.text = "Введите никнейм";
+            NickInputField.text = "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
             InputFieldText.color = Color.red;
             canStart = false;
             return;
         }
         else
         {
-            if (NickInputField.text == "Введите никнейм" || NickInputField.text == "Несуществующий игрок") return;
+            if (NickInputField.text == "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ" || NickInputField.text == "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ") return;
             PlayerData.SetNickname(NickInputField.text);
             canStart = true;
         }
@@ -91,7 +91,7 @@ public class Menu : MonoBehaviour
     public void LoadExistsGame(string level)
     {
         if (!NickInputField) return;
-        if (!Progress.isExistPlayer(NickInputField.text)) NickInputField.text = "Несуществующий игрок";
+        if (!Progress.isExistPlayer(NickInputField.text)) NickInputField.text = "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ";
         if(!canStart || !Progress.isExistPlayer(NickInputField.text)) return;
         if (level.Length > 0) SceneManager.LoadScene(level);
         PlayerData.SetContinue(true);

@@ -63,7 +63,7 @@ public class Progress : MonoBehaviour
 
     private static string game_uuid = "c26f88d5-41f6-4443-81ce-cf55303a8f44";
 
-    [SerializeField]private string _username; // надо запрос на имя пользователя
+    [SerializeField] private string _username; // надо запрос на имя пользователя
 
     private void Awake()
     {
@@ -82,6 +82,7 @@ public class Progress : MonoBehaviour
     private void Start()
     {
         if (PlayerData.IsContinue()) Load();
+        else if (CheckInJson(_username)) Delete();
     }
 
     [ContextMenu("Save")]
@@ -283,6 +284,8 @@ public class Progress : MonoBehaviour
                 TutorialManager tutorialManager = FindObjectOfType<TutorialManager>();
 
                 if (playerState.completeTutorial) tutorialManager.Complete();
+                
+                tutorialManager.FinishFirstQuest();
                 
                 tutorialManager.Run(playerState.tutorialIndex);
 

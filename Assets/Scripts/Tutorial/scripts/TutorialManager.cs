@@ -47,4 +47,6 @@ public class TutorialManager : MonoBehaviour
 
     public int GetTutorialIndex() => _index;
 
+    public void FinishFirstQuest() => _quests[0].UpdateQuest();
+
 }
