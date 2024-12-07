@@ -65,8 +65,6 @@ public class Player : MonoBehaviour
             SetFlaskNull();
             Debug.Log("Delete Flask");
         }
-        if(Input.GetKey(KeyCode.LeftAlt)) FreezeCamera();
-        else UnFreezeCamera();
     }
 
     public void FreezeCamera() => _cameraFreeze = true;

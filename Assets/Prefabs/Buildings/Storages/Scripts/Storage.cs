@@ -4,7 +4,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-[CustomEditor(typeof(Resource))]
 public class Storage : InteractableBuilding
 {
     [SerializeField]protected Resource[] Resources;

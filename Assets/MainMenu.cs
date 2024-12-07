@@ -11,7 +11,10 @@ public class MainMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape)) ChangeState();
         _menu.SetActive(isActive);
         if (isActive) { Time.timeScale = 0f; Player.Instance.FreezeCamera(); }
-        else { Time.timeScale = 1f; Player.Instance.UnFreezeCamera(); }
+        else { Time.timeScale = 1f; if (Input.GetKey(KeyCode.LeftAlt)) Player.Instance.FreezeCamera();
+            else Player.Instance.UnFreezeCamera();
+        }
+        
     }
 
     public void ChangeState()
