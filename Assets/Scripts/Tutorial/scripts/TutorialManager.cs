@@ -23,6 +23,7 @@ public class TutorialManager : MonoBehaviour
 
     public void Run(int index = 0)
     {
+        if (isComplete) return;
         _index = index;
         _quests[_index].OnComplete += OnComplete;
         _quests[_index].RunQuest();

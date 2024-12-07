@@ -121,8 +121,17 @@ public class BuildingManager : MonoBehaviour
         {
             _buildingCarette.gameObject.SetActive(false);
         }
-        
+
         if (Input.GetMouseButtonDown(1))
+        {
+            DeleteBuiding();
+        }
+        if (Input.mouseScrollDelta.y > 0)
+        {
+            _building.RotateCollider();
+            _rotationType = _rotationTypes[++_currentRotation % _rotationTypes.Length];
+            _building.transform.localEulerAngles += new Vector3(0, -90, 0);
+        } else if(Input.mouseScrollDelta.y < 0)
         {
             _building.RotateCollider();
             _rotationType = _rotationTypes[++_currentRotation % _rotationTypes.Length];

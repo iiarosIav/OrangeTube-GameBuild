@@ -5,10 +5,10 @@ public class Flask
     public static float FlaskCapacity = 50;
     public enum FlaskType
     {
-        None,
         Honey,
         EnergyHoney,
-        Metal
+        Metal,
+        None
     }
     FlaskType _type;
 

@@ -15,8 +15,7 @@ public class KeyBoardQuest : IQuest
 
     public override void UpdateQuest()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse1) || 
-            (BuildingManager.Instance.GetCanBuilding() && Input.GetKeyDown(KeyCode.Mouse0)))
+        if (BuildingManager.Instance.GetCanBuilding() && Input.GetKeyDown(KeyCode.Mouse0))
         {
             tipPanel.SetActive(false);
             OnComplete?.Invoke();

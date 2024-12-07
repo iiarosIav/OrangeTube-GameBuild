@@ -10,10 +10,5 @@ public class MainStorage : Storage
         {
             Instance = this;
         }
-        else
-        {
-            Destroy(gameObject);
-        }
-        
     }
 }

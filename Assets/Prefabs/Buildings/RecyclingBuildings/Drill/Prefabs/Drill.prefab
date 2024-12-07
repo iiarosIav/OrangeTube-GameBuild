@@ -753,8 +753,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _model: {fileID: 4530326283780854318}
   _collider: {fileID: 2661909354493736727}
-  _material: {fileID: 0}
-  _buildType: 2
+  _buildType: 1
   CanBuild: 0
   _price:
   - _count: 1

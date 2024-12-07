@@ -18,12 +18,12 @@ public class Building : InteractiveObject
 {
     public enum BuildType
     {
-        None,
         RecyclingFactory,
         Drill,
         HoneyStorage,
         MetalStorage,
-        MainStorage
+        MainStorage,
+        None
     }
     [SerializeField] private Renderer _model;
     [SerializeField] private BuildingCollider _collider;

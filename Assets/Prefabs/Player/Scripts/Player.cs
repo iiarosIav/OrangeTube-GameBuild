@@ -48,6 +48,8 @@ public class Player : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
     }
 
+    public void SetPosition(Vector3 pos) => transform.position = pos;
+
     private void Update()
     {
         if (_isStatic) return;

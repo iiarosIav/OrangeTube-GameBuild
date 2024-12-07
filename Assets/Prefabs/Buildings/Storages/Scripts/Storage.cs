@@ -24,7 +24,7 @@ public class Storage : InteractableBuilding
     void ChangeValues(Resource resource, Slider CapacityBar, TextMeshProUGUI CapacityText)
     {
         if (CapacityBar) { CapacityBar.maxValue = resource.GetCapacity(); CapacityBar.value = resource.GetAmount(); }
-        if (CapacityText) CapacityText.text = $"{resource.ResourceType} count: {resource.GetAmount()}/{resource.GetCapacity()}";
+        if (CapacityText) CapacityText.text = $"{resource.GetAmount()}/{resource.GetCapacity()}";
     }
 
     public Resource[] ReturnResourcesCount() => Resources;

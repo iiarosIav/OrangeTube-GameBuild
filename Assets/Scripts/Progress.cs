@@ -49,9 +49,9 @@ public class Progress : MonoBehaviour
 
     private static HttpClient client = new HttpClient();
 
-    private string game_uuid = "c26f88d5-41f6-4443-81ce-cf55303a8f44";
+    private static string game_uuid = "c26f88d5-41f6-4443-81ce-cf55303a8f44";
 
-    private string _username = "user_with_apples1"; // надо запрос на имя пользователя
+    [SerializeField]private string _username; // надо запрос на имя пользователя
 
     private void Awake()
     {
@@ -64,6 +64,12 @@ public class Progress : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        _username = PlayerData.GetNickname();
+    }
+
+    private void Start()
+    {
+        if (PlayerData.IsContinue()) Load();
     }
 
     [ContextMenu("Save")]
@@ -142,7 +148,6 @@ public class Progress : MonoBehaviour
         foreach (Building building in buildings)
         {
             BuildingState buildingState = new BuildingState();
-            // buildingState.buildingType = building.Type; // Нужна переменная у класса Builduing - Building.Type
             buildingState.position = building.transform.position;
             buildingState.rotation = building.transform.rotation;
             buildingState.buildingType = building.GetBuildType();
@@ -182,6 +187,27 @@ public class Progress : MonoBehaviour
         return false;
     }
 
+    public static bool isExistPlayer(string usname)
+    {
+        int a = 0;
+        Task<string> response = client.GetStringAsync(
+            $"https://2025.nti-gamedev.ru/api/games/{game_uuid}/players/");
+
+        string json = response.Result;
+
+        PlayerSave[] saveList = ZVJson.FromJson<PlayerSave>(json, true);
+
+        foreach (var player in saveList)
+        {
+            if (player.name == usname)
+            {
+                a++;
+            }
+        }
+        if (a > 0) return true;
+        else return false;
+    }
+
     [ContextMenu("Load")]
     public void Load()
     {
@@ -210,7 +236,7 @@ public class Progress : MonoBehaviour
                 
                 tutorialManager.Run(playerState.tutorialIndex);
 
-                Player.Instance.transform.position = playerState.position;
+                Player.Instance.SetPosition(playerState.position);
                 if (playerState.resourceType != Flask.FlaskType.None)
                 {
                     Player.Instance.SetFlusk(playerState.resourceType);
@@ -224,6 +250,7 @@ public class Progress : MonoBehaviour
                 {
                     Building building = Instantiate(PickBuilding(buildingstate.buildingType), buildingstate.position,
                         buildingstate.rotation).GetComponent<Building>();
+                    Debug.Log(buildingstate.hasResources + " ---- " + building.GetBuildType());
                     building.Initialize();
                     if (buildingstate.hasResources == false) continue;
                     building.GetComponent<Storage>().SetResources(buildingstate.resources);
@@ -239,7 +266,7 @@ public class Progress : MonoBehaviour
         GameObject gameObject = null;
         foreach (var bType in bTypes.BuildTypes)
         {
-            if (bType.GetBuildingType() == type) gameObject = bType.GetPrefab();
+            if (bType.GetBuildingType() == type) { gameObject = bType.GetPrefab(); }
         }
 
         return gameObject;

@@ -13,17 +13,15 @@ MonoBehaviour:
   m_Name: BuildingTypes
   m_EditorClassIdentifier: 
   BuildTypes:
-  - type: 1
+  - type: 0
     Prefab: {fileID: 5296061155722254094, guid: cebb3936d5533c04a9532943e2f3e3d5,
       type: 3}
-  - type: 2
+  - type: 1
     Prefab: {fileID: 5296061155722254094, guid: 047a6a90e5d7e124e927179f0d2699cb,
       type: 3}
-  - type: 3
+  - type: 2
     Prefab: {fileID: 5832245059838431151, guid: 61346bb65e7c7344ca97f12b72ac7239,
       type: 3}
   - type: 4
-    Prefab: {fileID: 0}
-  - type: 5
     Prefab: {fileID: 5832245059838431151, guid: a60cb5ea2d4011543afff4f01850e6e6,
       type: 3}
