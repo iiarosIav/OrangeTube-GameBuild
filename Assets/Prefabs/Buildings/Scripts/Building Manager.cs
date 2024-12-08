@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public enum RotationType
@@ -119,7 +120,7 @@ public class BuildingManager : MonoBehaviour
                 Progress progress = Progress.Instance;
 
                 string comment = $"Игрок {progress.GetUsername()} построил здание типа {build.GetBuildType()}";
-                progress.Save(comment);
+                Task.Run(() => progress.Save(comment));
             }
         }
         else

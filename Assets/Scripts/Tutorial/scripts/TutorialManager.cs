@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class TutorialManager : MonoBehaviour
@@ -36,7 +37,7 @@ public class TutorialManager : MonoBehaviour
         Progress progress = Progress.Instance;
         
         string comment = $"Игрок {progress.GetUsername()} завершил квест номер {_index++}";
-        progress.Save(comment);
+        Task.Run(() => progress.Save(comment));
         
         if(_index < _quests.Count)
         {

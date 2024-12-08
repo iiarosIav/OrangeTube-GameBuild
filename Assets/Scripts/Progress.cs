@@ -103,10 +103,10 @@ public class Progress : MonoBehaviour
     [ContextMenu("Save")]
     public void a()
     {
-        Save();
+        Task.Run(() => Save());
     }
     
-    public void Save(string comment = null)
+    public async Task Save(string comment = null)
     {
         string username = _username;
 
@@ -141,15 +141,15 @@ public class Progress : MonoBehaviour
 
         httpWebRequest.ContentType = "application/json";
 
-        using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+        using (var streamWriter = new StreamWriter(await httpWebRequest.GetRequestStreamAsync()))
         {
-            streamWriter.Write(json);
+            await streamWriter.WriteAsync(json);
         }
         
-        if (comment != null) SendLog(comment, playerSave.resources);
+        if (comment != null) await SendLog(comment, playerSave.resources);
     }
 
-    private void SendLog(string comment, ResourcesClass resources)
+    private async Task SendLog(string comment, ResourcesClass resources)
     {
         LogClass log = new LogClass();
         log.comment = $"{DateTime.Now} - {comment}";
@@ -163,9 +163,9 @@ public class Progress : MonoBehaviour
 
         httpWebRequest.ContentType = "application/json";
 
-        using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+        using (var streamWriter = new StreamWriter(await httpWebRequest.GetRequestStreamAsync()))
         {
-            streamWriter.Write(json);
+            await streamWriter.WriteAsync(json);
         }
     }
 
@@ -294,7 +294,7 @@ public class Progress : MonoBehaviour
     public void SaveAndQuit()
     {
         string comment = $"Игрок {_username} вышел";
-        Save(comment);
+        Task.Run(() => Save(comment));
         Application.Quit();
     }
 
