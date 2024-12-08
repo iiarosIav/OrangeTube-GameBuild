@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     
     [SerializeField] private float _mouseSencetivity = 1f;
     [SerializeField] private Transform _cameraTransform;
+    [SerializeField] private Animator Animator;
     
     private bool _isStatic;
 
@@ -23,6 +24,10 @@ public class Player : MonoBehaviour
 
     private bool _rotRoutine;
     private bool _cameraFreeze;
+
+    public GameObject HoneyFlask;
+    public GameObject EnergyHoneyFlask;
+    public GameObject MetalFlask;
 
     private GameObject _floor;
 
@@ -82,11 +87,22 @@ public class Player : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
+        if (Mathf.Abs(horizontalInput) >= 0.1f || Mathf.Abs(verticalInput) >= 0.1f) Animator.SetBool("isWalk", true);
+        else Animator.SetBool("isWalk", false);
+
         float mouseX = Input.GetAxis("Mouse X");
 
         Vector3 inputVector = new Vector3(horizontalInput, 0, verticalInput);
 
-        if (!_cameraFreeze) { _cameraTransform.localEulerAngles += new Vector3(0f, mouseX * _mouseSencetivity, 0f); }
+        if (!_cameraFreeze) { _cameraTransform.localEulerAngles += new Vector3(0f, mouseX * _mouseSencetivity, 0f);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
         if (inputVector != Vector3.zero && !_rotRoutine)
         {
             _rotRoutine = true;
@@ -110,8 +126,24 @@ public class Player : MonoBehaviour
     }
 
     public Flask GetFlask() => _flask;
-    public void SetFlusk(Flask.FlaskType type) => _flask = new Flask(type);
-    public void SetFlaskNull() => _flask = null;
+    public void SetFlusk(Flask.FlaskType type) { _flask = new Flask(type); Animator.SetLayerWeight(1, 1);
+        switch (type)
+        {
+            case Flask.FlaskType.Honey:
+                HoneyFlask.SetActive(true); break;
+            case Flask.FlaskType.EnergyHoney:
+                EnergyHoneyFlask.SetActive(true); break;
+            case Flask.FlaskType.Metal:
+                MetalFlask.SetActive(true); break;
+            default:
+                return;
+        }
+    }
+    public void SetFlaskNull() { _flask = null; Animator.SetLayerWeight(1, 0);
+        HoneyFlask.SetActive(false);
+        EnergyHoneyFlask.SetActive(false);
+        MetalFlask.SetActive(false);
+    }
 
 
     private void OnCollisionEnter(Collision collision)

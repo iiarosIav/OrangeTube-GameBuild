@@ -13,6 +13,8 @@ public class RecycleBuidling : InteractableBuilding
     [SerializeField]private float _recycleTime = 20;
     protected float timer;
 
+    protected bool isDrill;
+
     public Slider ReadyBar;
     public Slider CapacityBar;
     public TextMeshProUGUI CapacityText;
@@ -70,6 +72,7 @@ public class RecycleBuidling : InteractableBuilding
         if (GivenResource.GetAmount() <= 0)
         {
             timer = Time.time;
+            isDrill = true;
             return;
         }
         if (Time.time - timer > _recycleTime)
@@ -78,6 +81,7 @@ public class RecycleBuidling : InteractableBuilding
             GivenResource.SetAmount(GivenResource.GetAmount() - 1);
             RecievedResource.SetAmount(RecievedResource.GetAmount() + 1);
             Wait.Click();
+            isDrill = false;
         }
         if (!ReadyBar) return;
         ReadyBar.value = 100 * (Time.time - timer) / _recycleTime;
