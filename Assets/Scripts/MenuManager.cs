@@ -32,14 +32,14 @@ public class Menu : MonoBehaviour
     {
         if (NickInputField.text.Length < 1)
         {
-            NickInputField.text = "������� �������";
+            NickInputField.text = "Введите никнейм";
             InputFieldText.color = Color.red;
             canStart = false;
             return;
         }
         else
         {
-            if (NickInputField.text == "������� �������" || NickInputField.text == "�������������� �����") return;
+            if (NickInputField.text == "Введите никнейм" || NickInputField.text == "Несуществующий игрок") return;
             PlayerData.SetNickname(NickInputField.text);
             canStart = true;
         }
@@ -48,8 +48,6 @@ public class Menu : MonoBehaviour
     private void Update()
     {
         if(!canStart) { return; }
-        image.GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height);
-        text.GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height);
         if (isFading)
         {
             image.gameObject.SetActive (true);
@@ -90,7 +88,7 @@ public class Menu : MonoBehaviour
     public void LoadExistsGame(string level)
     {
         if (!NickInputField) return;
-        if (!Progress.isExistPlayer(NickInputField.text)) NickInputField.text = "�������������� �����";
+        if (!Progress.isExistPlayer(NickInputField.text)) NickInputField.text = "Несуществующий игрок";
         if(!canStart || !Progress.isExistPlayer(NickInputField.text)) return;
         if (level.Length > 0) SceneManager.LoadScene(level);
         PlayerData.SetContinue(true);
