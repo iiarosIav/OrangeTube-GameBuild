@@ -28,7 +28,7 @@ public class Storage : InteractableBuilding
 
     public Resource[] ReturnResourcesCount() => Resources;
 
-    public void ReturnResources(Product[] products)
+    public void ReturnResources(Product[] products, Building.BuildType buildType)
     {
         for (int i = 0; i < Resources.Length; i++)
         {
@@ -36,6 +36,12 @@ public class Storage : InteractableBuilding
             {
                 if (Resources[i].ResourceType != products[j].ProductType) continue;
                 Resources[i].SetAmount(Resources[i].GetAmount() + products[j].GetCost());
+                
+                Progress progress = Progress.Instance;
+                string comment = $"Игрок {progress.GetUsername()} разобрал здание типа {buildType}";
+                progress.Save(comment);
+                
+                return;
             }
         }
     }

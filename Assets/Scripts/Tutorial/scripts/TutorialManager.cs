@@ -33,8 +33,10 @@ public class TutorialManager : MonoBehaviour
     {
         _quests[_index].OnComplete -= OnComplete;
         
-        string comment = $"Игрок {Progress.Instance.GetUsername()} завершил квест номер {_index++}";
-        Progress.Instance.Save(comment);
+        Progress progress = Progress.Instance;
+        
+        string comment = $"Игрок {progress.GetUsername()} завершил квест номер {_index++}";
+        progress.Save(comment);
         
         if(_index < _quests.Count)
         {
