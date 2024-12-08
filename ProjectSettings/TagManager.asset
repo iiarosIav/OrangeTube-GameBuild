@@ -8,15 +8,15 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Floor
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Bee
+  - Player
+  - Hive
+  - Ore
+  - Building
+  - Map
   - 
   - 
   - 
