@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using static Unity.VisualScripting.Member;
 
 [Serializable]
 public class Product

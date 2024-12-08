@@ -38,6 +38,8 @@ public class BuildingManager : MonoBehaviour
 
     [SerializeField] private TakeAndGiveQuest GiveQuest, TakeQuest, WaitQuest;
 
+    public AudioSource Source;
+
     private void Awake()
     {
         if (Instance == null)
@@ -116,6 +118,8 @@ public class BuildingManager : MonoBehaviour
                 build.SetMaterial(2);
                 build.SetActions(GiveQuest.Click, TakeQuest.Click);
                 build.Wait = WaitQuest;
+
+                Source.Play();
             }
         }
         else

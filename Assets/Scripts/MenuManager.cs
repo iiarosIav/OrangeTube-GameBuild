@@ -23,6 +23,9 @@ public class Menu : MonoBehaviour
     private float duration = 2f;
     private bool canStart = false;
 
+    public AudioSource Source;
+    public AudioClip AudioClip;
+
     private void Start()
     {
         image.gameObject.SetActive(false);
@@ -50,6 +53,10 @@ public class Menu : MonoBehaviour
         if(!canStart) { return; }
         if (isFading)
         {
+            Source.clip = AudioClip;
+            Source.loop = false;
+            Source.Play();
+
             image.gameObject.SetActive(true);
             elapsedTime += Time.deltaTime;
             float alpha = Mathf.Clamp01(elapsedTime / duration);

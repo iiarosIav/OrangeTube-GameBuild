@@ -35,6 +35,8 @@ public class Player : MonoBehaviour
 
     private Flask _flask;
 
+    public AudioSource AudioSource;
+
     private void Awake()
     {
         if (Instance == null)
@@ -139,11 +141,13 @@ public class Player : MonoBehaviour
             default:
                 return;
         }
+        AudioSource.Play();
     }
     public void SetFlaskNull() { _flask = null; Animator.SetLayerWeight(1, 0);
         HoneyFlask.SetActive(false);
         EnergyHoneyFlask.SetActive(false);
         MetalFlask.SetActive(false);
+        AudioSource.Play();
     }
 
 
