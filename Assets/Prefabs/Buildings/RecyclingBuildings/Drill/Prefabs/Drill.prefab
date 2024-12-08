@@ -765,8 +765,8 @@ MonoBehaviour:
   _invalid: {fileID: 2100000, guid: 7d56fcf164973744fab4e426bc75b95f, type: 2}
   _static: {fileID: 4874126678125670354, guid: 5b3aa8f52e65c764995cfb8033c82a5a, type: 3}
   _deleteButton: {fileID: 3096594877646740055}
-  Give: {fileID: 0}
-  Take: {fileID: 0}
+  Give: {fileID: 554319723829925992}
+  Take: {fileID: 1144906107069582460}
   Wait: {fileID: 0}
   Menu: {fileID: 7785879464798152974}
   GivenResource:

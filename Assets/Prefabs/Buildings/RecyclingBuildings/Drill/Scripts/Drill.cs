@@ -5,8 +5,8 @@ using UnityEngine;
 public class Drill : RecycleBuidling
 {
     public string OreName;
-    public string ValidText = "Здесь есть руда";
-    public string InvalidText = "Здесь нет руды";
+    public string ValidText = "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ";
+    public string InvalidText = "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ";
 
     private LayerMask _mask;
 
@@ -23,7 +23,8 @@ public class Drill : RecycleBuidling
     {
         base.Update();
 
-        if (!_isStatic) switch (CheckOre())
+        if (!_isStatic)
+            switch (CheckOre())
             {
                 case true:
                     WarningText.text = ValidText;
@@ -41,10 +42,9 @@ public class Drill : RecycleBuidling
 
     bool CheckOre()
     {
-
         RaycastHit _hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        return 
+        return
             Physics.Raycast(ray, out _hit, Mathf.Infinity, _mask);
     }
 }

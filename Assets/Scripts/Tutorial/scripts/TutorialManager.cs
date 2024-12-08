@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,12 +21,15 @@ public class TutorialManager : MonoBehaviour
         if (isComplete == false && _index != -1 && _quests.Count > 0) _quests[_index].UpdateQuest();
     }
 
-    public void Run(int index = 0)
+    public void Run(int index = 0, bool isContinued = false)
     {
         if (isComplete) return;
         _index = index;
         _quests[_index].OnComplete += OnComplete;
         _quests[_index].RunQuest();
+        if (_index == 0 || isContinued) return;
+        string comment = $"Игро {Progress.Instance.GetUsername()} завершил квест номер {_index}";
+        Progress.Instance.Save(comment);
     }
 
     void OnComplete()

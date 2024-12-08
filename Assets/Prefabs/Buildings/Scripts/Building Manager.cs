@@ -115,6 +115,9 @@ public class BuildingManager : MonoBehaviour
                 build.SetMaterial(2);
                 build.SetActions(GiveQuest.Click, TakeQuest.Click);
                 build.Wait = WaitQuest;
+
+                string comment = $"Игрок {Progress.Instance.GetUsername()} построил здание типа {build.GetBuildType()}";
+                Progress.Instance.Save(comment);
             }
         }
         else

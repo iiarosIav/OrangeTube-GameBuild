@@ -104,7 +104,7 @@ public class Building : InteractiveObject
         if(_collider != null)
         {
             Vector3 size = _collider.gameObject.GetComponent<Collider>().bounds.size;
-            Debug.Log(size);
+            // Debug.Log(size);
             float x = size.x;
             float y = size.z;
             Size = (x, y);
