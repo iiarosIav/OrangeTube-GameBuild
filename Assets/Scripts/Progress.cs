@@ -93,29 +93,33 @@ public class Progress : MonoBehaviour
         _username = PlayerData.GetNickname();
     }
 
-    private void Start()
+    private async void Start()
     {
         if (PlayerData.IsContinue()) Load();
-        else if (CheckInJson(_username)) Delete();
+        else if (await CheckInJson(_username))
+        {
+            Delete();
+            FindObjectOfType<TutorialManager>().Starter();
+        }
         else FindObjectOfType<TutorialManager>().Starter();
     }
 
     [ContextMenu("Save")]
-    public void a()
+    public void ContextSave()
     {
-        Task.Run(() => Save());
+        Save();
     }
     
-    public async Task Save(string comment = null)
+    public async void Save(string comment = null)
     {
         string username = _username;
 
-        bool injson = CheckInJson(username);
+        bool injson = await CheckInJson(username);
 
         PlayerSave playerSave = new PlayerSave();
         playerSave.name = username;
 
-        playerSave.resources = GetResources();
+        playerSave.resources = await GetResources();
 
         HttpWebRequest httpWebRequest;
         string json;
@@ -141,9 +145,16 @@ public class Progress : MonoBehaviour
 
         httpWebRequest.ContentType = "application/json";
 
-        using (var streamWriter = new StreamWriter(await httpWebRequest.GetRequestStreamAsync()))
+        await using (var streamWriter = new StreamWriter(await httpWebRequest.GetRequestStreamAsync()))
         {
             await streamWriter.WriteAsync(json);
+        }
+        
+        var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+        {
+            var result = streamReader.ReadToEnd();
+            // Debug.Log(result);
         }
         
         if (comment != null) await SendLog(comment, playerSave.resources);
@@ -163,18 +174,25 @@ public class Progress : MonoBehaviour
 
         httpWebRequest.ContentType = "application/json";
 
-        using (var streamWriter = new StreamWriter(await httpWebRequest.GetRequestStreamAsync()))
+        await using (var streamWriter = new StreamWriter(await httpWebRequest.GetRequestStreamAsync()))
         {
             await streamWriter.WriteAsync(json);
         }
+        
+        var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+        {
+            var result = streamReader.ReadToEnd();
+            // Debug.Log(result);
+        }
     }
 
-    private ResourcesClass GetResources()
+    private async Task<ResourcesClass> GetResources()
     {
         ResourcesClass resources = new ResourcesClass();
         resources.playerState = GetPlayerState();
-        resources.buildingStates = GetBuildingStates();
-        resources.hiveStates = GetHiveStates();
+        resources.buildingStates = await GetBuildingStates();
+        resources.hiveStates = await GetHiveStates();
         return resources;
     }
 
@@ -200,7 +218,7 @@ public class Progress : MonoBehaviour
         return playerState;
     }
 
-    private List<BuildingState> GetBuildingStates()
+    private async Task<List<BuildingState>> GetBuildingStates()
     {
         List<BuildingState> buildingStates = new List<BuildingState>();
         Building[] buildings = FindObjectsOfType<Building>();
@@ -226,7 +244,7 @@ public class Progress : MonoBehaviour
         return buildingStates;
     }
 
-    private List<HiveState> GetHiveStates()
+    private async Task<List<HiveState>> GetHiveStates()
     {
         List<HiveState> hiveStates = new List<HiveState>();
         HiveBehaviour[] hives = FindObjectsOfType<HiveBehaviour>();
@@ -243,7 +261,7 @@ public class Progress : MonoBehaviour
         return hiveStates;
     }
 
-    private bool CheckInJson(string username)
+    private async Task<bool> CheckInJson(string username)
     {
         Task<string> response = client.GetStringAsync(
             $"https://2025.nti-gamedev.ru/api/games/{game_uuid}/players/");
@@ -294,7 +312,7 @@ public class Progress : MonoBehaviour
     public void SaveAndQuit()
     {
         string comment = $"Игрок {_username} вышел";
-        Task.Run(() => Save(comment));
+        Save(comment);
         Application.Quit();
     }
 
@@ -344,27 +362,36 @@ public class Progress : MonoBehaviour
                 {
                     Player.Instance.SetFlaskNull();
                 }
-
-                foreach (BuildingState buildingstate in player.resources.buildingStates)
-                {
-                    Building building = Instantiate(PickBuilding(buildingstate.buildingType), buildingstate.position,
-                        buildingstate.rotation).GetComponent<Building>();
-                    Debug.Log(buildingstate.hasResources + " ---- " + building.GetBuildType());
-                    building.Initialize();
-                    if (buildingstate.hasResources == false) continue;
-                    building.GetComponent<Storage>().SetResources(buildingstate.resources);
-                }
-
-                foreach (HiveState hiveState in player.resources.hiveStates)
-                {
-                    HiveBehaviour hive = Instantiate(PickBuilding(hiveState.buildingType), 
-                        hiveState.position, hiveState.rotation).GetComponent<HiveBehaviour>();
-                    hive.HoneyCapacity = hiveState.honeyCapacity;
-                    hive.SetQuest(hiveState.takeAndGiveQuest);
-                }
+                
+                CreateBuildings(player.resources.buildingStates);
+                CreateHives(player.resources.hiveStates);
                 
                 return;
             }
+        }
+    }
+
+    private void CreateBuildings(List<BuildingState> buildings)
+    {
+        foreach (BuildingState buildingstate in buildings)
+        {
+            Building building = Instantiate(PickBuilding(buildingstate.buildingType), buildingstate.position,
+                buildingstate.rotation).GetComponent<Building>();
+            Debug.Log(buildingstate.hasResources + " ---- " + building.GetBuildType());
+            building.Initialize();
+            if (buildingstate.hasResources == false) continue;
+            building.GetComponent<Storage>().SetResources(buildingstate.resources);
+        }
+    }
+
+    private void CreateHives(List<HiveState> hives)
+    {
+        foreach (HiveState hiveState in hives)
+        {
+            HiveBehaviour hive = Instantiate(PickBuilding(hiveState.buildingType), 
+                hiveState.position, hiveState.rotation).GetComponent<HiveBehaviour>();
+            hive.HoneyCapacity = hiveState.honeyCapacity;
+            hive.SetQuest(hiveState.takeAndGiveQuest);
         }
     }
 

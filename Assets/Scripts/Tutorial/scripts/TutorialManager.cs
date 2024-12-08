@@ -37,7 +37,7 @@ public class TutorialManager : MonoBehaviour
         Progress progress = Progress.Instance;
         
         string comment = $"Игрок {progress.GetUsername()} завершил квест номер {_index++}";
-        Task.Run(() => progress.Save(comment));
+        progress.Save(comment);
         
         if(_index < _quests.Count)
         {

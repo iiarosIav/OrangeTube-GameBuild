@@ -24,5 +24,13 @@ public class Base : InteractiveObject
         Player.Instance.SetIsStatic(_isActive);
         BuildingManager.Instance.gameObject.SetActive(_isActive);
         _isActive = !_isActive;
+
+        if(_isActive)
+        {
+            Progress progress = Progress.Instance;
+
+            string comment = $"Игрок {progress.GetUsername()} построил здания";
+            progress.Save(comment);
+        }
     }
 }

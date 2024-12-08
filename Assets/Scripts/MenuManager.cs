@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Menu : MonoBehaviour
 {
     public string LevelName;
-    public Image image;
+    public CanvasGroup image;
     public TextMeshProUGUI text;
 
     [Header("NicknameInputField")]
@@ -50,13 +50,11 @@ public class Menu : MonoBehaviour
         if(!canStart) { return; }
         if (isFading)
         {
-            image.gameObject.SetActive (true);
+            image.gameObject.SetActive(true);
             elapsedTime += Time.deltaTime;
             float alpha = Mathf.Clamp01(elapsedTime / duration);
 
-            Color color = image.color;
-            color.a = alpha;
-            image.color = color;
+            image.alpha = alpha;
 
             if (elapsedTime >= duration)
             {
