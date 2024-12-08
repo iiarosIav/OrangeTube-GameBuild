@@ -63,6 +63,12 @@ public class LogClass
     public ResourcesClass resources_changed;
 }
 
+[Serializable]
+public class ResourcesSave
+{
+    public ResourcesClass resources;
+}
+
 public class Progress : MonoBehaviour
 {
     public static Progress Instance;
@@ -89,15 +95,19 @@ public class Progress : MonoBehaviour
 
     private void Start()
     {
-        return;
         if (PlayerData.IsContinue()) Load();
         else if (CheckInJson(_username)) Delete();
+        else FindObjectOfType<TutorialManager>().Starter();
     }
 
     [ContextMenu("Save")]
+    public void a()
+    {
+        Save();
+    }
+    
     public void Save(string comment = null)
     {
-        return;
         string username = _username;
 
         bool injson = CheckInJson(username);
@@ -108,29 +118,32 @@ public class Progress : MonoBehaviour
         playerSave.resources = GetResources();
 
         HttpWebRequest httpWebRequest;
+        string json;
 
         if (injson)
         {
-            Delete();
+            ResourcesSave resourcesSave = new ResourcesSave();
+            resourcesSave.resources = playerSave.resources;
+            json = JsonUtility.ToJson(resourcesSave);
+            httpWebRequest =
+                (HttpWebRequest)WebRequest.Create($"https://2025.nti-gamedev.ru/api/games/{game_uuid}/players/{username}/");
+            httpWebRequest.Method = "PUT";
         }
-
-        string json = JsonUtility.ToJson(playerSave);
-        httpWebRequest =
-            (HttpWebRequest)WebRequest.Create($"https://2025.nti-gamedev.ru/api/games/{game_uuid}/players/");
-        httpWebRequest.Method = "POST";
+        
+        else
+        {
+            json = JsonUtility.ToJson(playerSave);
+            
+            httpWebRequest =
+                (HttpWebRequest)WebRequest.Create($"https://2025.nti-gamedev.ru/api/games/{game_uuid}/players/");
+            httpWebRequest.Method = "POST";
+        }
 
         httpWebRequest.ContentType = "application/json";
 
         using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
         {
             streamWriter.Write(json);
-        }
-
-        var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-        {
-            var result = streamReader.ReadToEnd();
-            Debug.Log(result);
         }
         
         if (comment != null) SendLog(comment, playerSave.resources);
@@ -153,13 +166,6 @@ public class Progress : MonoBehaviour
         using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
         {
             streamWriter.Write(json);
-        }
-
-        var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-        {
-            var result = streamReader.ReadToEnd();
-            Debug.Log(result);
         }
     }
 
@@ -295,7 +301,6 @@ public class Progress : MonoBehaviour
     [ContextMenu("Load")]
     public void Load()
     {
-        return;
         Task<string> response = client.GetStringAsync(
             $"https://2025.nti-gamedev.ru/api/games/{game_uuid}/players/");
 
@@ -328,7 +333,7 @@ public class Progress : MonoBehaviour
                 
                 tutorialManager.FinishFirstQuest();
                 
-                tutorialManager.Run(playerState.tutorialIndex, true);
+                tutorialManager.Run(playerState.tutorialIndex);
 
                 Player.Instance.SetPosition(playerState.position);
                 if (playerState.resourceType != Flask.FlaskType.None)
@@ -390,7 +395,7 @@ public class Progress : MonoBehaviour
     public void Delete()
     {
         Task<HttpResponseMessage> response = client.DeleteAsync(
-            $"https://2025.nti-gamedev.ru/api/games/{game_uuid}/players/{_username}");
+            $"https://2025.nti-gamedev.ru/api/games/{game_uuid}/players/{_username}/");
     }
     
     public string GetUsername() => _username;

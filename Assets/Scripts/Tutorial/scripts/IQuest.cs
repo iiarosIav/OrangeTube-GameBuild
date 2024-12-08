@@ -8,4 +8,9 @@ public abstract class IQuest : MonoBehaviour
 
     public abstract void RunQuest();
     public abstract void UpdateQuest();
+
+    public virtual void CompleteQuest()
+    {
+        
+    }
 }

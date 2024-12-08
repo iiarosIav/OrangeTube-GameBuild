@@ -103,15 +103,16 @@ public class Player : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+
+        Vector3 worldVelocity = _playerModel.TransformVector(inputVector) * speed;
+
+        _rigidbody.velocity = new Vector3(worldVelocity.x, _rigidbody.velocity.y, worldVelocity.z);
+        
         if (inputVector != Vector3.zero && !_rotRoutine)
         {
             _rotRoutine = true;
             StartCoroutine(PlayerModelRotate());
         }
-
-        Vector3 worldVelocity = _playerModel.TransformVector(inputVector) * speed;
-
-        _rigidbody.velocity = new Vector3(worldVelocity.x, _rigidbody.velocity.y, worldVelocity.z);
 
 
         if (Input.GetKeyDown(KeyCode.Space) && _grounded)

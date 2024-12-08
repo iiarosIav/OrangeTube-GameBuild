@@ -11,7 +11,7 @@ public class TutorialManager : MonoBehaviour
 
     private int _index = -1;
 
-    private void Start()
+    public void Starter()
     {
         Run();
     }
@@ -21,21 +21,21 @@ public class TutorialManager : MonoBehaviour
         if (isComplete == false && _index != -1 && _quests.Count > 0) _quests[_index].UpdateQuest();
     }
 
-    public void Run(int index = 0, bool isContinued = false)
+    public void Run(int index = 0)
     {
         if (isComplete) return;
         _index = index;
         _quests[_index].OnComplete += OnComplete;
         _quests[_index].RunQuest();
-        if (_index == 0 || isContinued) return;
-        string comment = $"Игро {Progress.Instance.GetUsername()} завершил квест номер {_index}";
-        Progress.Instance.Save(comment);
     }
 
     void OnComplete()
     {
         _quests[_index].OnComplete -= OnComplete;
-        _index++;
+        
+        string comment = $"Игрок {Progress.Instance.GetUsername()} завершил квест номер {_index++}";
+        Progress.Instance.Save(comment);
+        
         if(_index < _quests.Count)
         {
             _quests[_index].OnComplete += OnComplete;
@@ -50,6 +50,6 @@ public class TutorialManager : MonoBehaviour
 
     public int GetTutorialIndex() => _index;
 
-    public void FinishFirstQuest() => _quests[0].UpdateQuest();
+    public void FinishFirstQuest() => _quests[0].CompleteQuest();
 
 }

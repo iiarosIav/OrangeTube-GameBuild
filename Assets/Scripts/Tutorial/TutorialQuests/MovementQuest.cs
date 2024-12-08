@@ -19,4 +19,9 @@ public class MovementQuest : IQuest
         bool isPressed = Input.GetKeyDown(KeyCode.W) | Input.GetKeyDown(KeyCode.S)| Input.GetKeyDown(KeyCode.A)| Input.GetKeyDown(KeyCode.D);
         if (isPressed) { tipPanel.SetActive(false); OnComplete?.Invoke(); }
     }
+
+    public override void CompleteQuest()
+    {
+        tipPanel.SetActive(false);
+    }
 }
